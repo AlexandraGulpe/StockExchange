@@ -16,7 +16,7 @@ public class StockMarket {
     }
 
     //function for buying a Stock for a certain quantity
-    public void buyStock(String symbol, int quantity, int wantedPrice) {
+    public void buyStock(String symbol, int quantity, double wantedPrice) {
         Stock stock = stockMarket.get(symbol);
         if (stock != null) {
             double price = stock.getPrice();
@@ -31,7 +31,7 @@ public class StockMarket {
     }
 
     // function for selling Stock
-    public void sellStock(String symbol, int quantity, int wantedPrice) {
+    public void sellStock(String symbol, int quantity, double wantedPrice) {
         Stock stock = stockMarket.get(symbol);
         if (stock != null) {
             double price = stock.getPrice();

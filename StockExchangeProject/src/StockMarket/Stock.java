@@ -2,7 +2,7 @@ package StockMarket;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-class Stock {
+public class Stock {
     private String symbol;
     private Double price;
     private AtomicInteger quantity;

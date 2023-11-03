@@ -1,8 +1,7 @@
 package StockMarket;
-
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Buyer implements Runnable {
+public class Seller implements Runnable {
     private StockMarket stockMarket;
     private String symbol;
     private int quantity;
@@ -26,7 +25,7 @@ public class Buyer implements Runnable {
         this.wantedPrice = wantedPrice;
     }
 
-    public Buyer(StockMarket stockMarket, String symbol, int quantity, double wantedPrice, int taxID, int nrSuccessfulTransactions) {
+    public Seller(StockMarket stockMarket, String symbol, int quantity, double wantedPrice, int taxID, int nrSuccessfulTransactions) {
         this.stockMarket = stockMarket;
         this.symbol = symbol;
         this.quantity = quantity;
@@ -37,6 +36,6 @@ public class Buyer implements Runnable {
 
     @Override
     public void run() {
-        stockMarket.buyStock(symbol, quantity, wantedPrice);
+        stockMarket.sellStock(symbol, quantity, wantedPrice);
     }
 }

@@ -35,6 +35,7 @@ public class Buyer implements Runnable {
         this.nrSuccessfulTransactions = nrSuccessfulTransactions;
     }
 
+    // for now, the buyer is attempting to buy 1 time
     @Override
     public void run() {
         stockMarket.buyStock(symbol, quantity, wantedPrice);

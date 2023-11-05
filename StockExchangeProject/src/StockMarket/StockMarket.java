@@ -1,5 +1,7 @@
 package StockMarket;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class StockMarket {
@@ -15,6 +17,11 @@ public class StockMarket {
         return stockMarket.get(symbol);
     }
 
+    //getting all stocks
+    public Collection<Stock> getAllStocks() {
+        return stockMarket.values();
+    }
+
     //function for buying a Stock for a certain quantity
     public void buyStock(String symbol, int quantity, double wantedPrice) {
         Stock stock = stockMarket.get(symbol);
@@ -23,7 +30,7 @@ public class StockMarket {
             int availableQuantity = stock.getQuantity();
             if (availableQuantity >= quantity && wantedPrice == price) {
                 stock.buy(quantity);
-                System.out.println("Bought " + quantity + " shares of " + symbol + " at $" + price);
+                System.out.println(Thread.currentThread().getName() + " bought " + quantity + " x " + symbol + " at $" + price + " remaning quantity " + stock.getQuantity());
             } else {
                 System.out.println("Not enough quantity or price doesn't match");
             }
@@ -37,7 +44,7 @@ public class StockMarket {
             double price = stock.getPrice();
             if (price == wantedPrice){
                 stock.sell(quantity);
-                System.out.println("Sold " + quantity + " shares of " + symbol + " at $" + price);
+                System.out.println(Thread.currentThread().getName() + " sold " + quantity + " x " + symbol + " at $" + price + " remaining " + stock.getQuantity());
             } else {
                 System.out.println("Price wanted does not correspond to the current stock price");
             }

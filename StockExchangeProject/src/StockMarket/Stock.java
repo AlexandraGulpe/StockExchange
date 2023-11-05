@@ -1,5 +1,6 @@
 package StockMarket;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.AbstractOwnableSynchronizer;
 
 
 public class Stock {
@@ -36,4 +37,16 @@ public class Stock {
     public void sell(int amount) {
         quantity.addAndGet(amount);
     }
+
+//    public int getQuantity() {
+//        return quantity;
+//    }
+//
+//    public void buy(int amount) {
+//        quantity=quantity-amount;
+//    }
+//
+//    public void sell(int amount) {
+//        quantity = quantity + amount;
+//    }
 }

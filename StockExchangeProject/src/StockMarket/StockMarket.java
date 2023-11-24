@@ -1,12 +1,18 @@
 package StockMarket;
 
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class StockMarket {
     private ConcurrentHashMap<String, Stock> stockMarket = new ConcurrentHashMap<>();
+//    KafkaProducer<String, String> buyProducer = KafkaProducerConfig.createProducer();
+//    KafkaProducer<String, String> sellProducer = KafkaProducerConfig.createProducer();
 
+    KafkaProducer<String, String> producer = KafkaProducerConfig.createProducer();
     // adding a Stock object in the list of StockMarket items
     public void addStock(Stock stock) {
         stockMarket.put(stock.getSymbol(), stock);
@@ -31,6 +37,8 @@ public class StockMarket {
             if (availableQuantity >= quantity && wantedPrice == price) {
                 stock.buy(quantity);
                 System.out.println(Thread.currentThread().getName() + " bought " + quantity + " x " + symbol + " at $" + price + " remaning quantity " + stock.getQuantity());
+                String transactionString  = symbol+","+quantity+","+price;
+                KafkaProducerConfig.sendMessage(producer, "buychannel", transactionString);
             } else {
                 System.out.println("Not enough quantity or price doesn't match");
             }
@@ -45,11 +53,18 @@ public class StockMarket {
             if (price == wantedPrice){
                 stock.sell(quantity);
                 System.out.println(Thread.currentThread().getName() + " sold " + quantity + " x " + symbol + " at $" + price + " remaining " + stock.getQuantity());
+                String transactionString  = symbol+","+quantity+","+price;
+                KafkaProducerConfig.sendMessage(producer, "saleschannel", transactionString);
+
             } else {
                 System.out.println("Price wanted does not correspond to the current stock price");
             }
 
         }
+    }
+
+    public void closeChannel(){
+        producer.close();
     }
 }
 

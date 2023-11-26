@@ -1,8 +1,10 @@
 package StockMarket;
 
+import General.Transaction;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,7 +31,7 @@ public class StockMarket {
     }
 
     //function for buying a Stock for a certain quantity
-    public void buyStock(String symbol, int quantity, double wantedPrice) {
+    public void buyStock(String symbol, int quantity, double wantedPrice) throws Exception {
         Stock stock = stockMarket.get(symbol);
         if (stock != null) {
             double price = stock.getPrice();
@@ -37,7 +39,8 @@ public class StockMarket {
             if (availableQuantity >= quantity && wantedPrice == price) {
                 stock.buy(quantity);
                 System.out.println(Thread.currentThread().getName() + " bought " + quantity + " x " + symbol + " at $" + price + " remaning quantity " + stock.getQuantity());
-                String transactionString  = symbol+","+quantity+","+price;
+                Transaction transaction = new Transaction(quantity, price, symbol, "buy", LocalDateTime.now().toString());
+                String transactionString = transaction.toJson();
                 KafkaProducerConfig.sendMessage(producer, "buychannel", transactionString);
             } else {
                 System.out.println("Not enough quantity or price doesn't match");
@@ -46,14 +49,15 @@ public class StockMarket {
     }
 
     // function for selling Stock
-    public void sellStock(String symbol, int quantity, double wantedPrice) {
+    public void sellStock(String symbol, int quantity, double wantedPrice) throws Exception {
         Stock stock = stockMarket.get(symbol);
         if (stock != null) {
             double price = stock.getPrice();
             if (price == wantedPrice){
                 stock.sell(quantity);
                 System.out.println(Thread.currentThread().getName() + " sold " + quantity + " x " + symbol + " at $" + price + " remaining " + stock.getQuantity());
-                String transactionString  = symbol+","+quantity+","+price;
+                Transaction transaction = new Transaction(quantity, price, symbol, "sell", LocalDateTime.now().toString());
+                String transactionString = transaction.toJson();
                 KafkaProducerConfig.sendMessage(producer, "saleschannel", transactionString);
 
             } else {

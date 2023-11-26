@@ -36,6 +36,10 @@ public class Seller implements Runnable {
 
     @Override
     public void run() {
-        stockMarket.sellStock(symbol, quantity, wantedPrice);
+        try {
+            stockMarket.sellStock(symbol, quantity, wantedPrice);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

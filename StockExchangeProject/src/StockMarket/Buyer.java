@@ -38,6 +38,10 @@ public class Buyer implements Runnable {
     // for now, the buyer is attempting to buy 1 time
     @Override
     public void run() {
-        stockMarket.buyStock(symbol, quantity, wantedPrice);
+        try {
+            stockMarket.buyStock(symbol, quantity, wantedPrice);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

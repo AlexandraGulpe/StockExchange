@@ -7,6 +7,8 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.util.Properties;
 
+//configure Message Receiver
+// should be running at port localhost:9092
 public class KafkaConsumerConfig {
     public static Consumer<String, String> createConsumer(String group) {
         Properties properties = new Properties();

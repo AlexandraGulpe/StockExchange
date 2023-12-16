@@ -2,8 +2,9 @@ package StockMarket;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.AbstractOwnableSynchronizer;
 
-
+// Stock class
 public class Stock {
+    // using atomic integer in order to deal with race conditions
     private String symbol;
     private Double price;
     private AtomicInteger quantity;
@@ -38,15 +39,4 @@ public class Stock {
         quantity.addAndGet(amount);
     }
 
-//    public int getQuantity() {
-//        return quantity;
-//    }
-//
-//    public void buy(int amount) {
-//        quantity=quantity-amount;
-//    }
-//
-//    public void sell(int amount) {
-//        quantity = quantity + amount;
-//    }
 }

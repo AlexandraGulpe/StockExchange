@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
 
+// parent transaction class
 public class Transaction {
     private double quantity;
     private double price;
@@ -78,7 +79,7 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{" +
+        return "{" +
                 "quantity=" + quantity +
                 ", price=" + price +
                 ", symbol='" + symbol + '\'' +
